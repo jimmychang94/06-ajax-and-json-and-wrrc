@@ -83,7 +83,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
     <script src="scripts/article.js"></script>
     <script src="scripts/articleView.js"></script>
-    <!-- This renders the index page. Because new.html also uses articleView.js; we can't have articleView.js run every function on load since there are some functions only for index.html and some only for new.html. The fetchAll function is called at the start of the initIndexPage function so the data is populated for the other functions to use. -->
-    <script>articleView.initIndexPage();</script>
+    <!-- On page load, if there is no localstorage an asynchronous call is initiated to retrieve the data from the JSON file.  While the data is being loaded, initIndexPage would have already been called. Therefore, we need to call initIndexPage after we get the data in order to populate the html. If there is localstorage then the fetchAll runs before initIndexPage.  -->
+    <script>
+    Article.fetchAll();
+    articleView.initIndexPage();</script>
   </body>
 </html>
